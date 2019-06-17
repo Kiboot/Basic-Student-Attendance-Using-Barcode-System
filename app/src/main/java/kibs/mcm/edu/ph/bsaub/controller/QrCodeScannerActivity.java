@@ -113,8 +113,10 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
         Log.d("QRCodeScanner", rawResult.getText());
         Log.d("QRCodeScanner", rawResult.getBarcodeFormat().toString());
 
-        String studName,section,sex;
-        int idno;
+        String studName = "";
+        String section ="";
+        String sex ="";
+        int idno=0;
 
 
 
@@ -128,10 +130,13 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
         builder.setTitle("Scan Result");
 
 
+
+        String text = "Name: Kevin Lee D. Cardoza IDnumber: 20090586";
+        //String text = "name: Banana cake, made with sugar, glycemicindex: 47";
         Pattern pattern = Pattern.compile("Name: (.*) IDnumber: (\\d+)");
-        Matcher matcher = pattern.matcher(result);
+        Matcher matcher = pattern.matcher(text);
         if (matcher.matches()) {
-            studName = (matcher.group(1));
+            studName =(matcher.group(1));
             idno = Integer.parseInt(matcher.group(2));
         }
 
@@ -149,7 +154,8 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
                 startActivity(browserIntent);
             }
         });
-        builder.setMessage(rawResult.getText());
+        //builder.setMessage(result);
+        builder.setMessage("Student Name: "+studName+" ID Number: "+idno);
         AlertDialog alert1 = builder.create();
         alert1.show();
     }

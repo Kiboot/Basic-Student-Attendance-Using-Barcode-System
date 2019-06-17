@@ -1,7 +1,7 @@
 package kibs.mcm.edu.ph.bsaub.model;
 
 public class Note {
-    public static final String TABLE_NAME = "notes";
+    public static final String TABLE_NAME = "stud_tbl";
 
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_NOTE = "note";
