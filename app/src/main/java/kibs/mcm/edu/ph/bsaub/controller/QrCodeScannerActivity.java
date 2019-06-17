@@ -1,4 +1,4 @@
-package kibs.mcm.edu.ph.bsaub;
+package kibs.mcm.edu.ph.bsaub.controller;
 
 //Core Android Libraries
 import android.content.DialogInterface;
@@ -11,10 +11,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 //SQLite Implementation Libraries
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import java.util.ArrayList;
-import java.util.List;
 
 //Core AndroidX Libraries
 import androidx.appcompat.app.AppCompatActivity;

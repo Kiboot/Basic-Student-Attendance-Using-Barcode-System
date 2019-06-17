@@ -1,4 +1,4 @@
-package kibs.mcm.edu.ph.bsaub;
+package kibs.mcm.edu.ph.bsaub.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import kibs.mcm.edu.ph.bsaub.controller.QrCodeScannerActivity;
+import kibs.mcm.edu.ph.bsaub.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
