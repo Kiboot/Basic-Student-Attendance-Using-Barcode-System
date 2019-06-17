@@ -11,10 +11,6 @@ import java.util.List;
 
 import kibs.mcm.edu.ph.bsaub.model.Note;
 
-/**
- * Created by ravi on 15/03/18.
- */
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Version
