@@ -1,5 +1,6 @@
 package kibs.mcm.edu.ph.bsaub;
 
+//Core Android Libraries
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,15 +10,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+//SQLite Implementation Libraries
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import java.util.ArrayList;
+import java.util.List;
 
+//Core AndroidX Libraries
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
-import androidx.sqlite.db;
+//import androidx.sqlite.db.SupportSQLiteDatabase; for future AndroidX SQLite Implementation Support
 
+//Zebra Crossing Library for Barcode Reading
 import com.google.zxing.Result;
-
+//Pattern Matching Libraries
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -111,6 +119,12 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
 
         String studName,section,sex;
         int idno;
+
+
+
+
+
+
 
 
 
