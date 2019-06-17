@@ -4,28 +4,28 @@ public class Note {
     public static final String TABLE_NAME = "stud_tbl";
 
     public static final String COLUMN_ID = "id";
-    public static final String COLUMN_NOTE = "note";
+    public static final String COLUMN_NAME = "note";
     public static final String COLUMN_TIMESTAMP = "timestamp";
 
     private int id;
-    private String note;
+    private String studname;
     private String timestamp;
 
 
     // Create table SQL query
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + "("
-                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + COLUMN_NOTE + " TEXT,"
+                    + COLUMN_ID + " INTEGER PRIMARY KEY,"
+                    + COLUMN_NAME + " TEXT,"
                     + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP"
                     + ")";
 
     public Note() {
     }
 
-    public Note(int id, String note, String timestamp) {
+    public Note(int id, String name, String timestamp) {
         this.id = id;
-        this.note = note;
+        this.studname = name;
         this.timestamp = timestamp;
     }
 
@@ -34,11 +34,11 @@ public class Note {
     }
 
     public String getNote() {
-        return note;
+        return studname;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setNote(String name) {
+        this.studname = name;
     }
 
     public String getTimestamp() {

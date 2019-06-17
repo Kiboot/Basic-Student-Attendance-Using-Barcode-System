@@ -131,8 +131,7 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
 
 
         String text = rawResult.getText();
-        //String text = "Name: Kevin Lee D. Cardoza IDnumber: 20090586";
-        //String text = "name: Banana cake, made with sugar, glycemicindex: 47";
+
         Pattern pattern = Pattern.compile("Name: (.*) IDnumber: (\\d+)");
         Matcher matcher = pattern.matcher(text);
         if (matcher.matches()) {
