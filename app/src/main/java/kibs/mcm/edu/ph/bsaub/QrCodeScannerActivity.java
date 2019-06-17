@@ -14,6 +14,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import static android.Manifest.permission.CAMERA;
 
@@ -32,20 +36,13 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
         if (currentapiVersion >= android.os.Build.VERSION_CODES.M) {
             if (checkPermission()) {
-                Toast.makeText(getApplicationContext(), "Permission already granted", Toast.LENGTH_LONG).show();
-
-            } else {
-                requestPermission();
-            }
+                //Toast.makeText(getApplicationContext(), "Permission already granted", Toast.LENGTH_LONG).show();
+            } else {requestPermission();}
         }
     }
-    private boolean checkPermission() {
-        return ( ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA ) == PackageManager.PERMISSION_GRANTED);
-    }
+    private boolean checkPermission() { return ( ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA ) == PackageManager.PERMISSION_GRANTED); }
 
-    private void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{CAMERA}, REQUEST_CAMERA);
-    }
+    private void requestPermission() { ActivityCompat.requestPermissions(this, new String[]{CAMERA}, REQUEST_CAMERA); }
 
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -65,18 +62,10 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
                                             public void onClick(DialogInterface dialog, int which) {
                                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                                     requestPermissions(new String[]{CAMERA},
-                                                            REQUEST_CAMERA);
-                                                }
-                                            }
-                                        });
-                                return;
-                            }
-                        }
-                    }
+                                                            REQUEST_CAMERA); } }});
+                                return; } } }
                 }
-                break;
-        }
-    }
+                break; } }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new androidx.appcompat.app.AlertDialog.Builder(QrCodeScannerActivity.this)
@@ -117,12 +106,23 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
         Log.d("QRCodeScanner", rawResult.getText());
         Log.d("QRCodeScanner", rawResult.getBarcodeFormat().toString());
 
-
+        String studName,section,sex;
+        int idno;
 
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Scan Result");
+
+
+        Pattern pattern = Pattern.compile("Name: (.*) IDnumber: (\\d+)");
+        Matcher matcher = pattern.matcher(result);
+        if (matcher.matches()) {
+            studName = (matcher.group(1));
+            idno = Integer.parseInt(matcher.group(2));
+        }
+
+
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
