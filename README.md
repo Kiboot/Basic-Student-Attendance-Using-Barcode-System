@@ -11,3 +11,4 @@ Planned Features:
 - Custom-generated QR Code (++)
 - More data retrievable from QR code (+)
 - Code Encryption and Protection (+)
+- Biometric Security Prompt (+)
