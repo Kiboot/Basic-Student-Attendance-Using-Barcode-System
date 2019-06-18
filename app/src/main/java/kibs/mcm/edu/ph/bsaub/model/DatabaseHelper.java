@@ -60,18 +60,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor != null)
             cursor.moveToFirst();
-        // prepare note object
-        SqliteEntry note = new SqliteEntry(
+        // prepare entry object
+        SqliteEntry entry = new SqliteEntry(
                 cursor.getInt(cursor.getColumnIndex(SqliteEntry.COLUMN_ID)),
                 cursor.getInt(cursor.getColumnIndex(SqliteEntry.COLUMN_SID)),
                 cursor.getString(cursor.getColumnIndex(SqliteEntry.COLUMN_NAME)),
                 cursor.getString(cursor.getColumnIndex(SqliteEntry.COLUMN_TIMESTAMP)));
         // close the db connection
         cursor.close();
-        return note;
+        return entry;
     }
 
-    public List<SqliteEntry> getAllNotes() {
+    public List<SqliteEntry> getAllEntries() {
         List<SqliteEntry> entries = new ArrayList<>();
 
         // Select All Query
