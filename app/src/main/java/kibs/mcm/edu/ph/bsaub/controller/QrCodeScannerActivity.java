@@ -114,8 +114,8 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
         Log.d("QRCodeScanner", rawResult.getBarcodeFormat().toString());
 
         String studName = "";
-        String section ="";
-        String sex ="";
+        //String section ="";
+        //String sex ="";
         int idno=0;
 
 
