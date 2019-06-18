@@ -11,6 +11,7 @@ Planned Features:
 - Online Data Sync using suitable tools; considering the use of Firebase (+++)
 - Data convertibility to Spreadsheets (.xlsx) (++)
 - Custom-generated QR Code (++)
+- App security by requiring a log-on or biometric features (++)
 - More data retrievable from QR code (+)
 - Code Encryption and Protection (+)
 - Biometric Security Prompt (+)
