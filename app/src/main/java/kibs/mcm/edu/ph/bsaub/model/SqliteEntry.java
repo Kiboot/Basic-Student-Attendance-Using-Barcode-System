@@ -1,10 +1,10 @@
 package kibs.mcm.edu.ph.bsaub.model;
 
-public class Note {
-    public static final String TABLE_NAME = "stud_tbl";
+public class SqliteEntry {
+    public static final String TABLE_NAME = "studtbl";
 
     public static final String COLUMN_ID = "id";
-    public static final String COLUMN_NAME = "note";
+    public static final String COLUMN_NAME = "name";
     public static final String COLUMN_TIMESTAMP = "timestamp";
 
     private int id;
@@ -20,10 +20,10 @@ public class Note {
                     + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP"
                     + ")";
 
-    public Note() {
+    public SqliteEntry() {
     }
 
-    public Note(int id, String name, String timestamp) {
+    public SqliteEntry(int id, String name, String timestamp) {
         this.id = id;
         this.studname = name;
         this.timestamp = timestamp;

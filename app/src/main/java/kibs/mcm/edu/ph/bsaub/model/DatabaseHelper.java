@@ -8,35 +8,28 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import kibs.mcm.edu.ph.bsaub.model.Note;
+import kibs.mcm.edu.ph.bsaub.model.SqliteEntry;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Version
     private static final int DATABASE_VERSION = 1;
-
     // Database Name
     private static final String DATABASE_NAME = "attendance_db";
 
-
-    public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
+    public DatabaseHelper(Context context) {super(context, DATABASE_NAME, null, DATABASE_VERSION);}
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         // create notes table
-        db.execSQL(Note.CREATE_TABLE);
+        db.execSQL(SqliteEntry.CREATE_TABLE);
     }
 
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + Note.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SqliteEntry.TABLE_NAME);
 
         // Create tables again
         onCreate(db);
@@ -49,10 +42,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         // `id` and `timestamp` will be inserted automatically.
         // no need to add them
-        values.put(Note.COLUMN_NAME, note);
+        values.put(SqliteEntry.COLUMN_NAME, note);
 
         // insert row
-        long id = db.insert(Note.TABLE_NAME, null, values);
+        long id = db.insert(SqliteEntry.TABLE_NAME, null, values);
 
         // close db connection
         db.close();
@@ -61,23 +54,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public Note getNote(long id) {
+    public SqliteEntry getNote(long id) {
         // get readable database as we are not inserting anything
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(Note.TABLE_NAME,
-                new String[]{Note.COLUMN_ID, Note.COLUMN_NAME, Note.COLUMN_TIMESTAMP},
-                Note.COLUMN_ID + "=?",
+        Cursor cursor = db.query(SqliteEntry.TABLE_NAME,
+                new String[]{SqliteEntry.COLUMN_ID, SqliteEntry.COLUMN_NAME, SqliteEntry.COLUMN_TIMESTAMP},
+                SqliteEntry.COLUMN_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
         if (cursor != null)
             cursor.moveToFirst();
 
         // prepare note object
-        Note note = new Note(
-                cursor.getInt(cursor.getColumnIndex(Note.COLUMN_ID)),
-                cursor.getString(cursor.getColumnIndex(Note.COLUMN_NAME)),
-                cursor.getString(cursor.getColumnIndex(Note.COLUMN_TIMESTAMP)));
+        SqliteEntry note = new SqliteEntry(
+                cursor.getInt(cursor.getColumnIndex(SqliteEntry.COLUMN_ID)),
+                cursor.getString(cursor.getColumnIndex(SqliteEntry.COLUMN_NAME)),
+                cursor.getString(cursor.getColumnIndex(SqliteEntry.COLUMN_TIMESTAMP)));
 
         // close the db connection
         cursor.close();
@@ -85,12 +78,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return note;
     }
 
-    public List<Note> getAllNotes() {
-        List<Note> notes = new ArrayList<>();
+    public List<SqliteEntry> getAllNotes() {
+        List<SqliteEntry> notes = new ArrayList<>();
 
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + Note.TABLE_NAME + " ORDER BY " +
-                Note.COLUMN_TIMESTAMP + " DESC";
+        String selectQuery = "SELECT  * FROM " + SqliteEntry.TABLE_NAME + " ORDER BY " +
+                SqliteEntry.COLUMN_TIMESTAMP + " DESC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -98,10 +91,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Note note = new Note();
-                note.setId(cursor.getInt(cursor.getColumnIndex(Note.COLUMN_ID)));
-                note.setNote(cursor.getString(cursor.getColumnIndex(Note.COLUMN_NAME)));
-                note.setTimestamp(cursor.getString(cursor.getColumnIndex(Note.COLUMN_TIMESTAMP)));
+                SqliteEntry note = new SqliteEntry();
+                note.setId(cursor.getInt(cursor.getColumnIndex(SqliteEntry.COLUMN_ID)));
+                note.setNote(cursor.getString(cursor.getColumnIndex(SqliteEntry.COLUMN_NAME)));
+                note.setTimestamp(cursor.getString(cursor.getColumnIndex(SqliteEntry.COLUMN_TIMESTAMP)));
 
                 notes.add(note);
             } while (cursor.moveToNext());
@@ -115,7 +108,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int getNotesCount() {
-        String countQuery = "SELECT  * FROM " + Note.TABLE_NAME;
+        String countQuery = "SELECT  * FROM " + SqliteEntry.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
 
@@ -127,20 +120,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return count;
     }
 
-    public int updateNote(Note note) {
+    public int updateNote(SqliteEntry note) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(Note.COLUMN_NAME, note.getNote());
+        values.put(SqliteEntry.COLUMN_NAME, note.getNote());
 
         // updating row
-        return db.update(Note.TABLE_NAME, values, Note.COLUMN_ID + " = ?",
+        return db.update(SqliteEntry.TABLE_NAME, values, SqliteEntry.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(note.getId())});
     }
 
-    public void deleteNote(Note note) {
+    public void deleteNote(SqliteEntry note) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(Note.TABLE_NAME, Note.COLUMN_ID + " = ?",
+        db.delete(SqliteEntry.TABLE_NAME, SqliteEntry.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(note.getId())});
         db.close();
     }
