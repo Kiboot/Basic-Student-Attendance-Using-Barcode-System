@@ -8,6 +8,7 @@ At the Moment, The QR Code is generated here: https://zxing.appspot.com/generato
 Planned Features:
 
 - Local Data Save using SQLite (+++)
+- Time in/Time out Capability (+++)
 - Online Data Sync using suitable tools; considering the use of Firebase (+++)
 - Data convertibility to Spreadsheets (.xlsx) (++)
 - Custom-generated QR Code (++)
