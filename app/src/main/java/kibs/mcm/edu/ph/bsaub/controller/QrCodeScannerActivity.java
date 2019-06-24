@@ -48,6 +48,8 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
 
+    mAdapter = new NotesAdapter(this, notesList);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
