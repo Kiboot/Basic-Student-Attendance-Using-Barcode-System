@@ -48,7 +48,6 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
 
-    mAdapter = new NotesAdapter(this, notesList);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,8 +138,6 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
 
 
 
-
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Scan Result");
 
@@ -155,9 +152,11 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
             section =(matcher.group(3));
         }
 
+        createEntry(studName,idno);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 mScannerView.resumeCameraPreview(QrCodeScannerActivity.this);
             }
         });
@@ -175,7 +174,7 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
     }
 
 
-    private void createNote(String sname, int sid) {
+    private void createEntry(String sname, int sid) {
         // inserting note in db and getting
         // newly inserted note id
         long id = db.insertEntry(sname,sid);
@@ -183,52 +182,7 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
         // get the newly inserted note from db
         SqliteEntry n = db.getEntry(id);
 
-        if (n != null) {
-            // adding new note to array list at 0 position
-            notesList.add(0, n);
-
-            // refreshing the list
-            mAdapter.notifyDataSetChanged();
-
-            toggleEmptyNotes();
-        }
     }
-
-    /**
-     * Updating note in db and updating
-     * item in the list by its position
-     */
-    private void updateNote(String note, int position) {
-        Note n = notesList.get(position);
-        // updating note text
-        n.setNote(note);
-
-        // updating note in db
-        db.updateNote(n);
-
-        // refreshing the list
-        notesList.set(position, n);
-        mAdapter.notifyItemChanged(position);
-
-        toggleEmptyNotes();
-    }
-
-    /**
-     * Deleting note from SQLite and removing the
-     * item from the list by its position
-     */
-    private void deleteNote(int position) {
-        // deleting the note from db
-        db.deleteNote(notesList.get(position));
-
-        // removing the note from the list
-        notesList.remove(position);
-        mAdapter.notifyItemRemoved(position);
-
-        toggleEmptyNotes();
-    }
-
-
 
 
 }
