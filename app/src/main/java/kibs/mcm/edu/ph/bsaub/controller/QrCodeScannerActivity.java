@@ -28,7 +28,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-import kibs.mcm.edu.ph.bsaub.view.EntryAdapter;
+//import kibs.mcm.edu.ph.bsaub.view.EntryAdapter;
 import kibs.mcm.edu.ph.bsaub.model.DatabaseHelper;
 import kibs.mcm.edu.ph.bsaub.model.SqliteEntry;
 
