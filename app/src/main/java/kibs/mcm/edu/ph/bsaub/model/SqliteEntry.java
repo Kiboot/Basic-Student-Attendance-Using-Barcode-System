@@ -36,31 +36,25 @@ public class SqliteEntry {
     public int getId() {
         return id;
     }
-
     public int getSId() {
         return sid;
     }
-
     public String getSname() {
         return studname;
+    }
+    public String getTimestamp() {
+        return timestamp;
     }
 
     public void setName(String name) {
         this.studname = name;
     }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public void setSId(int sid) {
         this.sid = sid;
     }
-
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }

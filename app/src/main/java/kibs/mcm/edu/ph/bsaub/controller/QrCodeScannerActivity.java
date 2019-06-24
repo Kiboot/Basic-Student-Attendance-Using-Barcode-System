@@ -22,13 +22,28 @@ import androidx.appcompat.app.AlertDialog;
 //Zebra Crossing Library for Barcode Reading
 import com.google.zxing.Result;
 //Pattern Matching Libraries
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+
+import kibs.mcm.edu.ph.bsaub.view.EntryAdapter;
+import kibs.mcm.edu.ph.bsaub.model.DatabaseHelper;
+import kibs.mcm.edu.ph.bsaub.model.SqliteEntry;
+
+
+
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import static android.Manifest.permission.CAMERA;
 
 public class QrCodeScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+
+    private DatabaseHelper db;
+
+    private List<SqliteEntry> notesList = new ArrayList<>();
+
 
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
@@ -114,11 +129,9 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
         Log.d("QRCodeScanner", rawResult.getBarcodeFormat().toString());
 
         String studName = "";
-        //String section ="";
+        String section ="";
         //String sex ="";
         int idno=0;
-
-
 
 
 
@@ -132,13 +145,13 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
 
         String text = rawResult.getText();
 
-        Pattern pattern = Pattern.compile("Name: (.*) IDnumber: (\\d+)");
+        Pattern pattern = Pattern.compile("Name: (.*) IDnumber: (\\d+) Section: (.*)");
         Matcher matcher = pattern.matcher(text);
         if (matcher.matches()) {
             studName =(matcher.group(1));
             idno = Integer.parseInt(matcher.group(2));
+            section =(matcher.group(3));
         }
-
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -154,10 +167,65 @@ public class QrCodeScannerActivity extends AppCompatActivity implements ZXingSca
             }
         });
         //builder.setMessage(result);
-        builder.setMessage("Student Name: "+studName+" ID Number: "+idno);
+        builder.setMessage("Student Name: "+studName+"\nID Number: "+idno+"\nSection: "+section);
         AlertDialog alert1 = builder.create();
         alert1.show();
     }
+
+
+    private void createNote(String sname, int sid) {
+        // inserting note in db and getting
+        // newly inserted note id
+        long id = db.insertEntry(sname,sid);
+
+        // get the newly inserted note from db
+        SqliteEntry n = db.getEntry(id);
+
+        if (n != null) {
+            // adding new note to array list at 0 position
+            notesList.add(0, n);
+
+            // refreshing the list
+            mAdapter.notifyDataSetChanged();
+
+            toggleEmptyNotes();
+        }
+    }
+
+    /**
+     * Updating note in db and updating
+     * item in the list by its position
+     */
+    private void updateNote(String note, int position) {
+        Note n = notesList.get(position);
+        // updating note text
+        n.setNote(note);
+
+        // updating note in db
+        db.updateNote(n);
+
+        // refreshing the list
+        notesList.set(position, n);
+        mAdapter.notifyItemChanged(position);
+
+        toggleEmptyNotes();
+    }
+
+    /**
+     * Deleting note from SQLite and removing the
+     * item from the list by its position
+     */
+    private void deleteNote(int position) {
+        // deleting the note from db
+        db.deleteNote(notesList.get(position));
+
+        // removing the note from the list
+        notesList.remove(position);
+        mAdapter.notifyItemRemoved(position);
+
+        toggleEmptyNotes();
+    }
+
 
 
 
